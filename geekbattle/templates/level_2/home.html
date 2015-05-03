@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <link href= "{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet">
+      <link href= "{{STATIC_URL}}css/ribbon.css" rel="stylesheet">
+      <script src="{{STATIC_URL}}js/jquery.min.js"></script>
+   </head>
+   <body>
+      <div id="container">
+         <div class="rectangle">
+            <h2>Select any language</h2>
+         </div>
+         <div class="triangle-l"></div>
+         <div class="triangle-r"></div>
+      </div>
+      </div>
+      <form action="/level_2/submit/" class="form-signin" role="form" id="a_form" method="post">{% csrf_token %}
+         <input type='hidden' id="button1" type="submit" value="1" name='re' >
+      </form>
+      <form action="/level_2/submit/" class="form-signin" role="form" id="b_form" method="post">{% csrf_token %}
+         <input type='hidden' id="button2" type="submit" value="2" name='re' >
+      </form>
+      <script>
+         function hover(element) {
+             element.setAttribute('src', '{{STATIC_URL}}img/python.JPG');
+         
+         }
+         function unhover(element) {
+             element.setAttribute('src', '{{STATIC_URL}}img/python1.JPG');
+         }
+         
+         function hover1(element) {
+             element.setAttribute('src', '{{STATIC_URL}}img/c++.PNG');
+         }
+         function unhover1(element) {
+             element.setAttribute('src', '{{STATIC_URL}}img/c++1.JPG');
+         }
+      </script>
+      <div  class="row lang">
+         <div class="col-md-4 col-md-offset-2">
+            <div id="animated-example" class="img animated bounceIn urlImg">
+               <a onclick='document.getElementById("a_form").submit();'>
+               <img style="height:400px;width:300px" src="{{STATIC_URL}}img/python1.JPG" onmouseover="hover(this);" onmouseout="unhover(this);" class="img-responsive">
+               </a>
+            </div>
+         </div>
+         <div class="col-md-4">
+            <div id="animated-example" class="img animated bounceIn">
+               <a onclick='document.getElementById("b_form").submit();'>
+               <img style="height:400px;width:300px" src="{{STATIC_URL}}img/c++1.JPG" onmouseover="hover1(this);" onmouseout="unhover1(this);" class="img-responsive" alt="img">
+               </a>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

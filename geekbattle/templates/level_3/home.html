@@ -1,0 +1,153 @@
+<html>
+   <head>
+      <script src="{{STATIC_URL}}js/jquery.min.js"></script>
+      <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+      <link href= "{{STATIC_URL}}css/page.css" rel="stylesheet">
+      <link href= "{{STATIC_URL}}css/ribbon.css" rel="stylesheet">
+      <link href= "{{STATIC_URL}}css/buttons.css" rel="stylesheet">
+      <script type="text/javascript" src="{{STATIC_URL}}js/enhance.js"></script>		
+      <style>
+         .upload{
+         padding-left:375px;
+         }
+      </style>
+      <script>
+         enhance({
+         					loadScripts: [
+         						'{{STATIC_URL}}js/jQuery.fileinput.js',
+         						'{{STATIC_URL}}js/example.js'
+         					],
+         					loadStyles: ['{{STATIC_URL}}css/enhanced.css']	
+         				});   
+         
+         
+         
+      </script>
+   </head>
+   <body>
+<div style="float:right;padding-right:485px;padding-bottom:10px;color:#000;    font-weight: bold;">
+                Time left:- 
+               <div style="display: inline-block;color:#000" id="countbox1"></div>
+            </div>	
+      <div style="width:700px" id="container">
+         <div style="width:550px;" class="bubble ">
+            <div style="width:580px" class="rectangle">
+               <h2 style="padding-top:0.1px;">Question</h2>
+            </div>
+            <div class="triangle-l"></div>
+            <div style="left:550px;"class="triangle-r"></div>
+            <div class="info">
+               <h4>{{question}}
+               </h4>
+            </div>
+         </div>
+      </div>
+      <div class="upload">
+         <form class="form-signin" action="/level_3/save/" method="post" id="b_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <a >
+            {{ form.docfile }}
+            </a>      
+            <br/>
+            <div style="float:left" id="buttonContainer"><a onclick='document.getElementById("b_form").submit();' class="button small green rounded" id="level_3">Upload</a></div>
+         </form>
+      </div>
+   </body>
+
+
+
+
+
+</script>
+      <script type="text/javascript">
+         var CDown = function() {
+         	this.state=0;
+         	this.counts=[];
+         	this.interval=null;
+         }
+         
+         CDown.prototype = {
+         	init: function(){
+         		this.state=1;
+         		var self=this;
+         		this.interval=window.setInterval(function(){self.tick();}, 1000);
+         	},
+         	add: function(date,id){
+         		this.counts.push({d:date,id:id});
+         		this.tick();
+         		if(this.state==0) this.init();
+         	},
+         	expire: function(idxs){ 
+         		document.getElementById("level_3").click();
+         		for(var x in idxs) {
+         			this.display(this.counts[idxs[x]], "");
+         			this.counts.splice(idxs[x], 1);
+         		}
+         	},
+         	format: function(r){
+         		var out="";
+         		out += r.h +" "+((r.h==1)?"hour":"hours")+", ";
+         		out += r.m +" "+((r.m==1)?"min":"mins")+", ";
+         		out += r.s +" "+((r.s==1)?"sec":"secs")+", ";
+         
+         		return out.substr(0,out.length-2);
+         	},
+         	math: function(work){
+         		var	y=w=d=h=m=s=ms=0;
+         
+         		ms=(""+((work%1000)+1000)).substr(1,3);
+         		work=Math.floor(work/1000);
+         		y=Math.floor(work/31536000);
+         		w=Math.floor(work/604800);
+         		d=Math.floor(work/86400);
+         		h=Math.floor(work/3600);
+         		work=work%3600;
+         
+         		m=Math.floor(work/60);
+         		work=work%60;
+         
+         		s=Math.floor(work);
+         
+         		return {y:y,w:w,d:d,h:h,m:m,s:s,ms:ms};
+         	},
+         	tick: function(){
+         		var now=(new Date()).getTime(),
+         			expired=[],cnt=0,amount=0;
+         
+         		if(this.counts)
+         		for(var idx=0,n=this.counts.length; idx<n; ++idx){
+         			cnt=this.counts[idx];
+         			amount=cnt.d.getTime()-now;
+         			if(amount<0){
+         				expired.push(idx);
+         			}
+         			else{
+         				this.display(cnt, this.format(this.math(amount)));
+         			}
+         		}
+         
+         		if(expired.length>0) this.expire(expired);
+         
+         		if(this.counts.length==0) window.clearTimeout(this.interval);
+         		
+         	},
+         	display: function(cnt,msg){
+         		document.getElementById(cnt.id).innerHTML=msg;
+         	}
+         };
+         
+         window.onload=function(){
+         	var cdown = new CDown();
+         
+         	cdown.add(new Date(2016,00,08,24,00,00), "countbox1");
+         };
+      </script>
+
+
+
+
+</html>
+
+
+
+

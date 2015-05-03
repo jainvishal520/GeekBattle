@@ -1,0 +1,52 @@
+<html>
+   <head>
+      <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+      <link href= "{{STATIC_URL}}css/style.css" rel="stylesheet">
+      <script src="{{STATIC_URL}}js/jquery.min.js"></script>
+      <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div id="quiz">
+         <div class="label label-warning">Question {{qid}} of 50.</div>
+         <div class="question">
+            <h2>
+               <div id="descrip"></div>
+            </h2>
+            <form  action="/level_1/start/" class="form-signin" role="form" id="a_form" method="post">
+               {% csrf_token %} 
+               <div class="options">
+                  <div>
+                     <label>
+                        <input type='radio' id="button1" type="submit" onclick='document.getElementById("a_form").submit();' value="1" name='re' >
+                        <div id="choice_1"></div>
+                     </label>
+                  </div>
+                  <div>
+                     <label>
+                        <input type='radio' id="button2" type="submit" onclick='document.getElementById("a_form").submit();' value="2" name='re' >
+                        <div id="choice_2"></div>
+                     </label>
+                  </div>
+                  <div>
+                     <label>
+                        <input type='radio' id="button3" type="submit" onclick='document.getElementById("a_form").submit();' value="3" name='re' >
+                        <div id="choice_3"></div>
+                     </label>
+                  </div>
+                  <div>
+                     <label>
+                        <input type='radio' id="button4" type="submit" onclick='document.getElementById("a_form").submit();' value="4" name='re' >
+                        <div id="choice_4"></div>
+                     </label>
+                  </div>
+                  <input type="hidden" name="qid1" id="qid1" value="{{qid}}"> 
+               </div>
+         </div>
+      </div>
+      </form>
+      <input type="hidden" name="qid" id="qid" value="{{qid}}"> 
+      {% block js %}
+      <script src="{{STATIC_URL}}js/qdata.js"></script>
+      {% endblock %}      
+   </body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>GeekBattle-Login</title>
+<link href= "{{STATIC_URL}}css/login.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/font.css" rel="stylesheet" type="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+</head>
+<body>
+
+<div class="wrap">
+	
+<div class="contact-form">
+
+	<form class="contact_form" action="/user/login/" method="post" name="contact_form">
+	{% csrf_token %}	<h1>Sign In Into Your Account</h1>
+	    <ul>
+	        <li>
+	            <input type="email" id="name" name="username" type="username" class="textbox1" name="email" placeholder="Example@gmail.com" required />
+	             <p><img src="{{STATIC_URL}}img/contact.png" alt=""></p>
+	        </li>
+	        <li>
+	            <input type="password" name="password" type="password" id="pass" class="textbox2" placeholder="password" required />
+	            <p><img src="{{STATIC_URL}}img/lock.png" alt=""></p>
+	        </li>
+         </ul>
+       	 	<input type="submit" name="Sign In" value="Sign In"/>
+			<div class="clear"></div>	
+		<div class="forgot">
+			<a href="/user/password_forget">forgot password?</a>
+		</div>	
+		<div class="clear"></div>	
+	</form>
+<div class="account">
+	<h2><a  href="/user/signup">Don't have an account? Sign Up!</a></h2>
+    <div class="span"><a href="/social/app"><img src="{{STATIC_URL}}img/facebook.png" alt=""/><i>Log In with Facebook</i><div class="clear"></div></a></div>	
+    <div class="span1"><a href="/social/start1"><img src="{{STATIC_URL}}img/twitter.png" alt=""/><i>Log In with Twitter</i><div class="clear"></div></a></div>
+    <div class="span2"><a href="/social/g/"><img src="{{STATIC_URL}}img/gplus.png" alt=""/><i>Log In with Google+</i><div class="clear"></div></a></div>
+</div>	
+
+<div class="clear"></div>	
+</div>
+
+
+</div>
+</body> 	
+</html>

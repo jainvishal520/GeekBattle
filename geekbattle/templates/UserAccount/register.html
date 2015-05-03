@@ -1,0 +1,63 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>GeekBattle-Register</title>
+<link href="{{STATIC_URL}}css/login.css" rel="stylesheet" type="text/css" media="all" />
+<link href="{{STATIC_URL}}css/font.css" rel="stylesheet" type="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+</head>
+<body>
+
+<div class="wrap">
+<!-- strat-contact-form -->	
+<div class="contact-form">
+<!-- start-form -->
+	<form class="contact_form" action="/user/signup/" method="post" name="contact_form">
+		{% csrf_token %}<h1>Sign Up</h1><br/>
+	    <ul>
+	        <li>
+	            <input type="email" id="name" name="username"class="textbox1" placeholder="Example@gmail.com" required />
+	             <p><img src="{{STATIC_URL}}img/contact.png" alt=""></p>
+	        </li>
+	         <li>
+	            <input type="password" id="pass1" name="password" class="textbox2" placeholder="password" pattern=".{6,}" title="Minmimum 6 letters or numbers."  required>
+	            <p><img src="{{STATIC_URL}}img/lock.png" alt=""></p>
+	        </li>
+			<li>
+	            <input type="password" id="pass2" name="confirm_new_password" class="textbox2" placeholder="Confirm password" onfocus="validatePass(document.getElementById('pass1'), this);" oninput="validatePass(document.getElementById('pass1'), this);" required>
+	            <p><img src="{{STATIC_URL}}img/lock.png" alt=""></p>
+	        </li>
+         </ul>
+       	 	<input type="submit" name="Sign In" value="Sign Up"/>
+			<div class="clear"></div>	
+		
+		<div class="clear"></div>	
+	</form>
+<!-- end-form -->
+<!-- start-account -->
+<div style="padding-top:35px;" class="account">
+		<h2><a  href="/user/login">Already have an account? Login!</a></h2>
+    <div class="span"><a href="/social/app"><img src="{{STATIC_URL}}img/facebook.png" alt=""/><i>Log In with Facebook</i><div class="clear"></div></a></div>	
+    <div class="span1"><a href="/social/start1"><img src="{{STATIC_URL}}img/twitter.png" alt=""/><i>Log In with Twitter</i><div class="clear"></div></a></div>
+    <div class="span2"><a href="/social/g/"><img src="{{STATIC_URL}}img/gplus.png" alt=""/><i>Log In with Google+</i><div class="clear"></div></a></div>
+</div>	
+<!-- end-account -->
+<div class="clear"></div>	
+</div>
+<!-- end-contact-form -->
+
+</div>
+<script>
+function validatePass(pass1, pass2) {
+    if (pass1.value != pass2.value || pass1.value == '' || pass2.value == '') {
+        pass2.setCustomValidity('Password incorrect');
+    } else {
+        pass2.setCustomValidity('');
+    }
+}
+</script>
+</body>
+</html>

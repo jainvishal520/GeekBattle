@@ -1,0 +1,214 @@
+<html>
+   <head>
+      <title>geekbattle</title>
+      <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+      <link href= "{{STATIC_URL}}css/style.css" rel="stylesheet">
+   </head>
+   <body >
+      <div class="head">
+         <div>
+            <h1>GEEK BATTLE</h1>
+         </div>
+         <hr/>
+         <div style="font-size:15px;margin-top:15px" class="row">
+            <div class="col-md-4">
+               Date:-  
+               <div id="date" style="display: inline-block"></div>
+            </div>
+            <div class="col-md-4" >
+               Total number of questions answered:-
+               <div id="count" style="display: inline-block"></div>
+            </div>
+            <div  style="float:right;padding-right:15px">
+               Time left:-
+               <div style="display: inline-block" id="countbox1"></div>
+            </div>
+         </div>
+         <hr />
+      </div>
+      <div class="row">
+      <div class="ques col-md-1">
+         <table id="task-bod">
+         </table>
+      </div>
+      <div style="padding-left:44px;padding-right:44px" class=" col-md-10">
+         <div id="content">
+            <div id="quiz">
+               <div class="label label-warning">Question {{qid}} of 50.</div>
+               <div class="question">
+                  <h2>
+                     <div id="descrip"></div>
+                  </h2>
+                  <form  action="/level_1/start/" class="form-signin" role="form" id="a_form" method="post">
+                     {% csrf_token %}               
+                     <div class="options">
+                        <div>
+                           <label>
+                              <input type='radio' id="button1" type="submit" onclick='document.getElementById("a_form").submit();' value="1" name='re' >
+                              <div id="choice_1"></div>
+                           </label>
+                        </div>
+                        <div>
+                           <label>
+                              <input type='radio' id="button2" type="submit" onclick='document.getElementById("a_form").submit();' value="2" name='re' >
+                              <div id="choice_2"></div>
+                           </label>
+                        </div>
+                        <div>
+                           <label>
+                              <input type='radio' id="button3" type="submit" onclick='document.getElementById("a_form").submit();' value="3" name='re' >
+                              <div id="choice_3"></div>
+                           </label>
+                        </div>
+                        <div>
+                           <label>
+                              <input type='radio' id="button4" type="submit" onclick='document.getElementById("a_form").submit();' value="4" name='re' >
+                              <div id="choice_4"></div>
+                           </label>
+                        </div>
+                        <input type="hidden" name="qid1" id="qid1" value="{{qid}}">
+                     </div>
+               </div>
+            </div>
+            </form>
+            <input type="hidden" name="qid" id="qid" value="{{qid}}"> 
+         </div>
+         <hr />
+         <div class="quizNav">
+            <div style="margin-top:10px">
+               <button class="btn btn-info" style="display: inline-block" id="Previous">Prev</button>
+               <form  action="/level_1/mark/" role="form" id="m_form" style="display: inline-block" method="post">{% csrf_token %} 
+                  <button id="name" class="btn btn-danger" name="name"  type="submit" ></button>
+                  <input type="hidden" name="qid2" id="qid2" value="{{qid}}"> 
+               </form>
+               <button class="btn btn-info" style="display: inline-block" id="Next">Next</button>
+            </div>
+         </div>
+         <hr />
+         </br>
+         <form action="/level_1/submit/" class="form-signin" role="form" id="t_form" method="post">
+            {% csrf_token %}
+            <div align="center">
+               <button class="btn btn-lg btn-success" id = "countbox" name = "countbox" type="submit" >I have Completed my Test</button>
+            </div>
+         </form>
+      </div>
+      <script src="{{STATIC_URL}}js/jquery.min.js"></script>
+      <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+         var input = Date();
+          document.getElementById("date").innerHTML = input.substring(0, 15);	
+              function z(clicked_id)
+              {
+              q = document.getElementById(clicked_id).value;
+              q=q-1;
+              document.getElementById("Next").click();
+              } 
+              var q=document.getElementById("qid2").value;
+              $('#Next').click(function(){
+                if(q==4)
+                q=3;
+                $('#content').load("http://geekbattle.asetalias.in/level_1/question/"+(++q), function() {
+                });
+                });
+              
+              
+              $('#Previous').click(function(){
+                if(q==1)
+                q=2;
+                $('#content').load("http://geekbattle.asetalias.in/level_1/question/"+(--q), function() {
+                });
+              });
+                
+                
+           
+      </script>
+      <script type="text/javascript">
+         var CDown = function() {
+         	this.state=0;
+         	this.counts=[];
+         	this.interval=null;
+         }
+         
+         CDown.prototype = {
+         	init: function(){
+         		this.state=1;
+         		var self=this;
+         		this.interval=window.setInterval(function(){self.tick();}, 1000);
+         	},
+         	add: function(date,id){
+         		this.counts.push({d:date,id:id});
+         		this.tick();
+         		if(this.state==0) this.init();
+         	},
+         	expire: function(idxs){ 
+         		document.getElementById("countbox").click();
+         		for(var x in idxs) {
+         			this.display(this.counts[idxs[x]], "");
+         			this.counts.splice(idxs[x], 1);
+         		}
+         	},
+         	format: function(r){
+         		var out="";
+         		out += r.h +" "+((r.h==1)?"hour":"hours")+", ";
+         		out += r.m +" "+((r.m==1)?"min":"mins")+", ";
+         		out += r.s +" "+((r.s==1)?"sec":"secs")+", ";
+         
+         		return out.substr(0,out.length-2);
+         	},
+         	math: function(work){
+         		var	y=w=d=h=m=s=ms=0;
+         
+         		ms=(""+((work%1000)+1000)).substr(1,3);
+         		work=Math.floor(work/1000);
+         		y=Math.floor(work/31536000);
+         		w=Math.floor(work/604800);
+         		d=Math.floor(work/86400);
+         		h=Math.floor(work/3600);
+         		work=work%3600;
+         
+         		m=Math.floor(work/60);
+         		work=work%60;
+         
+         		s=Math.floor(work);
+         
+         		return {y:y,w:w,d:d,h:h,m:m,s:s,ms:ms};
+         	},
+         	tick: function(){
+         		var now=(new Date()).getTime(),
+         			expired=[],cnt=0,amount=0;
+         
+         		if(this.counts)
+         		for(var idx=0,n=this.counts.length; idx<n; ++idx){
+         			cnt=this.counts[idx];
+         			amount=cnt.d.getTime()-now;
+         			if(amount<0){
+         				expired.push(idx);
+         			}
+         			else{
+         				this.display(cnt, this.format(this.math(amount)));
+         			}
+         		}
+         
+         		if(expired.length>0) this.expire(expired);
+         
+         		if(this.counts.length==0) window.clearTimeout(this.interval);
+         		
+         	},
+         	display: function(cnt,msg){
+         		document.getElementById(cnt.id).innerHTML=msg;
+         	}
+         };
+         
+         window.onload=function(){
+         	var cdown = new CDown();
+         
+         	cdown.add(new Date(2016,00,08,24,00,00), "countbox1");
+         };
+      </script>
+   </body>
+   {% block js %}
+   <script src="{{STATIC_URL}}js/quest.js"></script>
+   <script src="{{STATIC_URL}}js/qdata.js"></script>
+   {% endblock %}      
+</html>

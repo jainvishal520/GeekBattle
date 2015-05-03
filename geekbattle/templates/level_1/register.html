@@ -1,0 +1,54 @@
+<html>
+   <head>
+      <link href= "{{STATIC_URL}}css/buttons.css" rel="stylesheet">
+      <link href= "{{STATIC_URL}}css/page.css" rel="stylesheet">
+      <link href= "{{STATIC_URL}}css/ribbon.css" rel="stylesheet">
+   </head>
+
+
+
+   <body>
+
+
+
+
+      <div style="padding:10px"id="buttonContainer"><a href= "/user/logout" class="button small green rounded" >Logout</a></div>
+      <div id="container">
+      </div>
+<div style="float:right;padding-right:420px;padding-bottom:10px;color:#000;font-weight: bold;font-size:14px">
+                Time left for GeekBattle:- 
+               <div style="display: inline-block;color:#000" id="countbox1"></div>
+            </div>	
+      <div class="bubble">
+         <div class="rectangle">
+            <h2 id="name">Name: </h2>
+         </div>
+         <div class="triangle-l"></div>
+         <div class="triangle-r"></div>
+         <div class="info">
+	
+				<form action="" method="post" id=register>
+				{%csrf_token%}
+				{%for field in form%}
+					
+					<p>{{field.label_tag}}</p> <br><p>{{field}}</p>
+					<I><p>{{field.errors}}</p></I><br>
+					
+
+				{%endfor%}
+				<button type="submit" class="button small green rounded">Submit </button>
+<!--<button><input type="submit" value="submit" class="button small green rounded"></button>-->
+				</form> 
+
+  </div>
+      </div>
+      <br/><br/>
+      <!--<div id="end" align="center" style="font-size:25px">Thank you for taking this test</div>-->
+      </div>
+      <script src="{{STATIC_URL}}js/jquery.min.js"></script>
+      {% block js %}
+      <script src="{{STATIC_URL}}js/adata.js"></script>
+{%endblock%}
+
+</body>
+</html>
